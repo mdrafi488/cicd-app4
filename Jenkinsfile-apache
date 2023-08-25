@@ -10,20 +10,20 @@ pipeline {
         stage('CI Stage') {
             steps {
                 sh" 
-                zip -r html-apache-$BUILD_NUMBER.zip *
-                aws s3 cp html-apache-$BUILD_NUMBER.zip s3://jenkins-apache-cicd/
+                zip -r html-apache-$BUILD_NUMBER.zip * \n
+                aws s3 cp html-apache-$BUILD_NUMBER.zip s3://jenkins-apache-cicd/ \n
                 "
             }
         }
-        stage('CD Stage') {
-            steps {
-                sh"
-                aws s3 cp s3://jenkins-apache-cicd/html-apache-$PKG.zip .
-                unzip html-apache-$PKG.zip
-                scp index.html root@172.31.1.46:/var/www/html/
-                "
-            }
-        }
+        // stage('CD Stage') {
+        //     steps {
+        //         sh"
+        //         aws s3 cp s3://jenkins-apache-cicd/html-apache-$PKG.zip .
+        //         unzip html-apache-$PKG.zip
+        //         scp index.html root@172.31.1.46:/var/www/html/
+        //         "
+        //     }
+        // }
         
     }
 }
