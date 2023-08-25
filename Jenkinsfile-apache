@@ -18,6 +18,7 @@ pipeline {
         stage('CD Stage') {
             steps {
                 
+                sh 'rm -fr * '
                 sh 'aws s3 cp s3://jenkins-apache-cicd/html-apache-$PKG.zip . '
                 sh 'unzip html-apache-$PKG.zip '
                 sh 'scp index.html root@172.31.1.46:/var/www/html/ '
