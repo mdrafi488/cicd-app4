@@ -21,7 +21,7 @@ pipeline {
                 aws s3 cp s3://jenkins-apache-cicd/html-apache-$PKG.zip .
                 unzip html-apache-$PKG.zip
                 scp index.html root@172.31.1.46:/var/www/html/
-                
+                "
             }
         }
         
