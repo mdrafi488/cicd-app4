@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout stage') {
+            steps {
+                git clone git@github.com:mdrafi488/cicd-app4.git
+            }
+        }
+        stage('CI Stage') {
+            steps {
+                sh" 
+                zip -r html-apache-$BUILD_NUMBER.zip *
+                aws s3 cp html-apache-$BUILD_NUMBER.zip s3://jenkins-apache-cicd/
+                "
+            }
+        }
+        stage('CD Stage') {
+            steps {
+                sh"
+                aws s3 cp s3://jenkins-apache-cicd/html-apache-$PKG.zip .
+                unzip html-apache-$PKG.zip
+                scp index.html root@172.31.1.46:/var/www/html/
+                
+            }
+        }
+        
+    }
+}
